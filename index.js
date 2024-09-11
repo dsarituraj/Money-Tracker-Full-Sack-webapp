@@ -1,7 +1,7 @@
 require('dotenv').config();
-const express = require("express")
-const bodyParser = require("body-parser")
-const mongoose = require("mongoose")
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const app= express()
 app.use(bodyParser.json())
@@ -15,7 +15,7 @@ const db = mongoose.connection
 db.on('error', ()=> console.log("Error in connecting to the Database"))
 db.once('open', () => console.log("Connected to Database"))
 
-app.post("/add", (req,res) =>{
+app.post("/add", (req,_) =>{
     const category_select = req.body.category_select;
     const amount_input= req.body.amount_input;
     const info = req.body.info;
@@ -27,12 +27,12 @@ app.post("/add", (req,res) =>{
         "Info": info,
         "Date": date_input
     }
-    db.collection('users').insertOne(data, (err,collection) => {
+    db.collection('users').insertOne(data, (err,_) => {
         if(err) throw err;
         console.log("Record Inserted Successfully")
     })
 })
-app.get("/",(req,res) =>{
+app.get("/",(_,res) =>{
     res.set({
         "Allow-access-Allow-Origin":'*'
     })
